@@ -10,7 +10,7 @@ document.getElementById("novedades").innerHTML = `
         <div class="bg-white shadow-lg rounded-xl p-4 w-60">
           <img
             class="rounded-md w-full mb-4"
-            src="imagenes/1.jpg"
+            src="imagenes/1.jpeg"
             alt="The Last of Us Part II"
           />
           <p class="font-bold mb-3">S/ 50.00</p>
@@ -25,7 +25,7 @@ document.getElementById("novedades").innerHTML = `
         <div class="bg-white shadow-lg rounded-xl p-4 w-60">
           <img
             class="rounded-md w-full mb-4"
-            src="https://cdn1.epicgames.com/salesEvent/salesEvent/EGS_DyingLightTheFollowingEnhancedEdition_Techland_S1_2560x1440-7c37d65c987b377b8d890dd11a7c9e91"
+            src="imagenes/2.jpeg"
             alt="Dying Light"
           />
           <p class="font-bold mb-3">S/ 50.00</p>
@@ -40,7 +40,7 @@ document.getElementById("novedades").innerHTML = `
         <div class="bg-white shadow-lg rounded-xl p-4 w-60">
           <img
             class="rounded-md w-full mb-4"
-            src="https://image.api.playstation.com/vulcan/img/cfn/11307OV7i2V2x8snyfT8y3qGk6cKQ5b0Sovw2cgZKqXkfbU2KMzEwUnUXrHYFM2Fv4T1qTfbVN0Nq4d6YxGgflHABPZpM8Fl.png"
+            src="imagenes/3.jpeg"
             alt="Mortal Kombat X"
           />
           <p class="font-bold mb-3">S/ 50.00</p>
@@ -53,5 +53,6 @@ document.getElementById("novedades").innerHTML = `
       </div>
     </section>
 `;
+
 
 
