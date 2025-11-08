@@ -3,7 +3,7 @@ function ContactForm() {
     name: "",
     email: "",
     message: "",
-    phone: "",
+    pais: "",
   });
 
   const [errors, setErrors] = React.useState({});
@@ -36,9 +36,9 @@ function ContactForm() {
       newErrors.message = "El mensaje debe tener al menos 10 caracteres";
     }
 
-    // Validación del telefono
-    if (!formData.phone) {
-      newErrors.phone = "Por favor ingrese su telefono";
+    // Validación del país
+    if (!formData.pais) {
+      newErrors.pais = "Por favor seleccione un país";
     }
 
     setErrors(newErrors);
@@ -70,7 +70,7 @@ function ContactForm() {
           name: "",
           email: "",
           message: "",
-          phone: "",
+          pais: "",
         });
         setTimeout(() => setSubmitSuccess(false), 5000); // Reset el mensaje de éxito después de 5 segundos
       } catch (error) {
@@ -83,7 +83,7 @@ function ContactForm() {
 
     setIsSubmitting(false);
   };
-  
+
   return (
     <div className="min-h-screen bg-[#FFFFFF]">
       <div className="container mx-auto px-4 py-8 bg-[#F3F3F3] rounded-lg">
@@ -135,8 +135,8 @@ function ContactForm() {
               <div>
                 <input
                   type="text"
-                  id="phone"
-                  name="phone"
+                  id="telefono"
+                  name="telefono"
                   placeholder="Teléfono:"
                   className="w-full p-2 bg-gray-100 border border-gray-200 rounded focus:outline-none focus:border-blue-500"
                 />
@@ -261,8 +261,3 @@ function ContactForm() {
 }
 
 ReactDOM.render(<ContactForm />, document.getElementById("contact-content"));
-
-
-
-
-
