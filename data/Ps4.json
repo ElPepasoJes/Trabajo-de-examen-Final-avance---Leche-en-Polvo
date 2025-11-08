@@ -10,15 +10,16 @@
     "id": 2,
     "name": "Red Dead Redemption 2",
     "price": 50.0,
-    "image": "imagenes/9.jpg",
+    "image": "imagenes/9.jpeg",
     "platform": "PS4"
   },
   {
     "id": 3,
     "name": "Horizon Forbidden West",
     "price": 50.0,
-    "image": "imagenes/8.jpg",
+    "image": "imagenes/8.jpeg",
     "platform": "PS4"
   }
 ]
+
 
