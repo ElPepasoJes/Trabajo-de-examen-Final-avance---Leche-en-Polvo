@@ -7,85 +7,112 @@ function ContactForm() {
     message: "",
     phone: "",
   });
-
   const [errors, setErrors] = React.useState({});
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [submitSuccess, setSubmitSuccess] = React.useState(false);
 
   const validateForm = () => {
     const newErrors = {};
-
-    if (!formData.name.trim()) {
-      newErrors.name = "El nombre es requerido";
-    } else if (formData.name.length < 2) {
-      newErrors.name = "El nombre debe tener al menos 2 caracteres";
-    }
-
+    if (!formData.name.trim()) newErrors.name = "El nombre es requerido";
+    else if (formData.name.length < 2) newErrors.name = "Mínimo 2 caracteres";
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email) {
-      newErrors.email = "El correo electrónico es requerido";
-    } else if (!emailRegex.test(formData.email)) {
-      newErrors.email = "Por favor ingrese un correo electrónico válido";
-    }
-
-    if (!formData.message.trim()) {
-      newErrors.message = "El mensaje es requerido";
-    } else if (formData.message.length < 10) {
-      newErrors.message = "El mensaje debe tener al menos 10 caracteres";
-    }
-
-    if (!formData.phone) {
-      newErrors.phone = "Por favor ingrese su teléfono";
-    }
-
+    if (!formData.email) newErrors.email = "El correo es requerido";
+    else if (!emailRegex.test(formData.email)) newErrors.email = "Correo inválido";
+    if (!formData.message.trim()) newErrors.message = "El mensaje es requerido";
+    else if (formData.message.length < 10) newErrors.message = "Mínimo 10 caracteres";
+    if (!formData.phone) newErrors.phone = "El teléfono es requerido";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-
-    if (errors[name]) {
-      setErrors({
-        ...errors,
-        [name]: null,
-      });
-    }
+    const { name, value } = e.target; // OJO: name DEBE coincidir con las claves del state
+    setFormData((s) => ({ ...s, [name]: value }));
+    if (errors[name]) setErrors((s) => ({ ...s, [name]: null }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
+
     setIsSubmitting(true);
+    try {
+      // Enviar como JSON (lo más sencillo con Make)
+      const res = await fetch(WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-    if (validateForm()) {
-      try {
-        // ✅ ENVÍO REAL AL WEBHOOK DE MAKE
-        await fetch(WEBHOOK_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
-
-        setSubmitSuccess(true);
-        setFormData({
-          name: "",
-          email: "",
-          message: "",
-          phone: "",
-        });
-
-        setTimeout(() => setSubmitSuccess(false), 5000);
-      } catch (error) {
-        console.error("Error al enviar el formulario:", error);
-        alert("Hubo un error al enviar el formulario. Por favor, inténtelo de nuevo.");
+      // No todos los webhooks devuelven 200; si quieres, ignora el status.
+      if (!res.ok) {
+        console.warn("Webhook respondió con status:", res.status);
       }
-    }
 
-    setIsSubmitting(false);
+      setSubmitSuccess(true);
+      setFormData({ name: "", email: "", message: "", phone: "" });
+      setTimeout(() => setSubmitSuccess(false), 5000);
+    } catch (err) {
+      console.error("Error al enviar:", err);
+      alert("No se pudo enviar. Revisa la consola (F12 → Console).");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4 max-w-md">
+      <input
+        name="name"
+        value={formData.name}
+        onChange={handleInputChange}
+        placeholder="Nombre"
+        className="w-full border rounded px-3 py-2"
+      />
+      {errors.name && <p className="text-red-600 text-sm">{errors.name}</p>}
+
+      <input
+        name="email"
+        type="email"
+        value={formData.email}
+        onChange={handleInputChange}
+        placeholder="Correo"
+        className="w-full border rounded px-3 py-2"
+      />
+      {errors.email && <p className="text-red-600 text-sm">{errors.email}</p>}
+
+      <input
+        name="phone"
+        value={formData.phone}
+        onChange={handleInputChange}
+        placeholder="Teléfono"
+        className="w-full border rounded px-3 py-2"
+      />
+      {errors.phone && <p className="text-red-600 text-sm">{errors.phone}</p>}
+
+      <textarea
+        name="message"
+        value={formData.message}
+        onChange={handleInputChange}
+        placeholder="Mensaje"
+        className="w-full border rounded px-3 py-2"
+        rows={4}
+      />
+      {errors.message && <p className="text-red-600 text-sm">{errors.message}</p>}
+
+      <button
+        type="submit"
+        disabled={isSubmitting}
+        className="bg-blue-600 disabled:opacity-60 text-white px-4 py-2 rounded"
+      >
+        {isSubmitting ? "Enviando..." : "Enviar"}
+      </button>
+
+      {submitSuccess && (
+        <p className="text-green-600 pt-2">¡Mensaje enviado correctamente!</p>
+      )}
+    </form>
+  );
 }
 
 
@@ -266,6 +293,7 @@ function ContactForm() {
 }
 
 ReactDOM.render(<ContactForm />, document.getElementById("contact-content"));
+
 
 
 
