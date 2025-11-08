@@ -1,3 +1,5 @@
+const WEBHOOK_URL = "https://hook.us2.make.com/3sdajuc0chgthq5bia2oa94qr0muf6ac";
+
 function ContactForm() {
   const [formData, setFormData] = React.useState({
     name: "",
@@ -10,18 +12,15 @@ function ContactForm() {
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [submitSuccess, setSubmitSuccess] = React.useState(false);
 
-  // Validación de campos
   const validateForm = () => {
     const newErrors = {};
 
-    // Validación del nombre
     if (!formData.name.trim()) {
       newErrors.name = "El nombre es requerido";
     } else if (formData.name.length < 2) {
       newErrors.name = "El nombre debe tener al menos 2 caracteres";
     }
 
-    // Validación del email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.email) {
       newErrors.email = "El correo electrónico es requerido";
@@ -29,16 +28,14 @@ function ContactForm() {
       newErrors.email = "Por favor ingrese un correo electrónico válido";
     }
 
-    // Validación del mensaje
     if (!formData.message.trim()) {
       newErrors.message = "El mensaje es requerido";
     } else if (formData.message.length < 10) {
       newErrors.message = "El mensaje debe tener al menos 10 caracteres";
     }
 
-    // Validación del telefono
     if (!formData.phone) {
-      newErrors.phone = "Por favor ingrese su telefono";
+      newErrors.phone = "Por favor ingrese su teléfono";
     }
 
     setErrors(newErrors);
@@ -48,7 +45,7 @@ function ContactForm() {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    // Limpiar error del campo cuando el usuario empieza a escribir
+
     if (errors[name]) {
       setErrors({
         ...errors,
@@ -62,9 +59,16 @@ function ContactForm() {
     setIsSubmitting(true);
 
     if (validateForm()) {
-      // Simulamos el envío del formulario
       try {
-        await new Promise((resolve) => setTimeout(resolve, 1500)); // Simula una petición
+        // ✅ ENVÍO REAL AL WEBHOOK DE MAKE
+        await fetch(WEBHOOK_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
         setSubmitSuccess(true);
         setFormData({
           name: "",
@@ -72,51 +76,19 @@ function ContactForm() {
           message: "",
           phone: "",
         });
-        setTimeout(() => setSubmitSuccess(false), 5000); // Reset el mensaje de éxito después de 5 segundos
+
+        setTimeout(() => setSubmitSuccess(false), 5000);
       } catch (error) {
         console.error("Error al enviar el formulario:", error);
-        alert(
-          "Hubo un error al enviar el formulario. Por favor, inténtelo de nuevo."
-        );
+        alert("Hubo un error al enviar el formulario. Por favor, inténtelo de nuevo.");
       }
     }
 
     setIsSubmitting(false);
   };
+}
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        
-        try {
-            // Reemplaza con tu URL de webhook de Make
-            const webhookUrl = "https://hook.us2.make.com/3sdajuc0chgthq5bia2oa94qr0muf6ac";
-            
-            const response = await fetch(webhookUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData)
-            });
 
-            if (response.ok) {
-                alert('Formulario enviado con éxito! Nos pondremos en contacto contigo pronto.');
-                setFormData({
-                    name: '',
-                    email: '',
-                    phone: '',
-                    message: ''
-                });
-            } else {
-                throw new Error('Error al enviar el formulario');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Hubo un problema al enviar el formulario. Por favor intenta nuevamente.');
-        }
-    };
-
-  
   return (
     <div className="min-h-screen bg-[#FFFFFF]">
       <div className="container mx-auto px-4 py-8 bg-[#F3F3F3] rounded-lg">
@@ -294,4 +266,5 @@ function ContactForm() {
 }
 
 ReactDOM.render(<ContactForm />, document.getElementById("contact-content"));
+
 
