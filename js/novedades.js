@@ -10,7 +10,7 @@ document.getElementById("novedades").innerHTML = `
         <div class="bg-white shadow-lg rounded-xl p-4 w-60">
           <img
             class="rounded-md w-full mb-4"
-            src="https://image.api.playstation.com/vulcan/ap/rnd/202009/2921/I1XgqDfo7Sl3oswbY1nSBn9k.png"
+            src="imagenes/1.jpg"
             alt="The Last of Us Part II"
           />
           <p class="font-bold mb-3">S/ 50.00</p>
@@ -53,4 +53,5 @@ document.getElementById("novedades").innerHTML = `
       </div>
     </section>
 `;
+
 
