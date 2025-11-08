@@ -10,15 +10,16 @@
     "id": 2,
     "name": "Super Smash Bros Ultimate",
     "price": 50.0,
-    "image": "imagenes/11.jpeg",
+    "image": "imagenes/12.jpg",
     "platform": "Nintendo Switch"
   },
   {
     "id": 3,
     "name": "Luigi's Mansion 3",
     "price": 50.0,
-    "image": "imagenes/12.jpeg",
+    "image": "imagenes/11.jpeg",
     "platform": "Nintendo Switch"
   }
 
 ]
+
