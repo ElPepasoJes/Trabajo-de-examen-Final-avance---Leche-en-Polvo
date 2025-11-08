@@ -4,7 +4,7 @@ function GameCard({ game }) {
   return (
     <div className="bg-white shadow-lg rounded-xl p-4 w-60">
       <img
-        src={game.imagenes}
+        src={game.image}
         alt={game.name}
         className="rounded-md w-full mb-4"
       />
@@ -51,4 +51,5 @@ function App() {
 }
 
 ReactDOM.render(<App />, document.getElementById("moviesgrid"));
+
 
