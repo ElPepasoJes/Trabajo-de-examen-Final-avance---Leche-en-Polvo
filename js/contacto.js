@@ -261,4 +261,3 @@ function ContactForm() {
 }
 
 ReactDOM.render(<ContactForm />, document.getElementById("contact-content"));
-
