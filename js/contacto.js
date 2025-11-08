@@ -3,7 +3,7 @@ function ContactForm() {
     name: "",
     email: "",
     message: "",
-    pais: "",
+    phone: "",
   });
 
   const [errors, setErrors] = React.useState({});
@@ -36,9 +36,9 @@ function ContactForm() {
       newErrors.message = "El mensaje debe tener al menos 10 caracteres";
     }
 
-    // Validación del país
-    if (!formData.pais) {
-      newErrors.pais = "Por favor seleccione un país";
+    // Validación del telefono
+    if (!formData.phone) {
+      newErrors.phone = "Por favor ingrese su telefono";
     }
 
     setErrors(newErrors);
@@ -70,7 +70,7 @@ function ContactForm() {
           name: "",
           email: "",
           message: "",
-          pais: "",
+          phone: "",
         });
         setTimeout(() => setSubmitSuccess(false), 5000); // Reset el mensaje de éxito después de 5 segundos
       } catch (error) {
@@ -84,6 +84,39 @@ function ContactForm() {
     setIsSubmitting(false);
   };
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        try {
+            // Reemplaza con tu URL de webhook de Make
+            const webhookUrl = "https://hook.us2.make.com/3sdajuc0chgthq5bia2oa94qr0muf6ac";
+            
+            const response = await fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (response.ok) {
+                alert('Formulario enviado con éxito! Nos pondremos en contacto contigo pronto.');
+                setFormData({
+                    name: '',
+                    email: '',
+                    phone: '',
+                    message: ''
+                });
+            } else {
+                throw new Error('Error al enviar el formulario');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Hubo un problema al enviar el formulario. Por favor intenta nuevamente.');
+        }
+    };
+
+  
   return (
     <div className="min-h-screen bg-[#FFFFFF]">
       <div className="container mx-auto px-4 py-8 bg-[#F3F3F3] rounded-lg">
@@ -135,8 +168,8 @@ function ContactForm() {
               <div>
                 <input
                   type="text"
-                  id="telefono"
-                  name="telefono"
+                  id="phone"
+                  name="phone"
                   placeholder="Teléfono:"
                   className="w-full p-2 bg-gray-100 border border-gray-200 rounded focus:outline-none focus:border-blue-500"
                 />
@@ -261,3 +294,4 @@ function ContactForm() {
 }
 
 ReactDOM.render(<ContactForm />, document.getElementById("contact-content"));
+
