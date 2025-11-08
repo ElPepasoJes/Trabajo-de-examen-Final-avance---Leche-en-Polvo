@@ -9,7 +9,7 @@ document.getElementById("novedades").innerHTML = `
         <!-- CARD 1 -->
         <div class="bg-white shadow-lg rounded-xl p-4 w-60">
           <img
-            class="rounded-md w-full mb-4"
+            class="w-[208px] h-[260px] object-cover rounded-md"
             src="imagenes/1.jpeg"
             alt="The Last of Us Part II"
           />
@@ -24,7 +24,7 @@ document.getElementById("novedades").innerHTML = `
         <!-- CARD 2 -->
         <div class="bg-white shadow-lg rounded-xl p-4 w-60">
           <img
-            class="rounded-md w-full mb-4"
+            class="w-[208px] h-[260px] object-cover rounded-md"
             src="imagenes/2.jpeg"
             alt="Dying Light"
           />
@@ -39,7 +39,7 @@ document.getElementById("novedades").innerHTML = `
         <!-- CARD 3 -->
         <div class="bg-white shadow-lg rounded-xl p-4 w-60">
           <img
-            class="rounded-md w-full mb-4"
+            class="w-[208px] h-[260px] object-cover rounded-md"
             src="imagenes/3.jpeg"
             alt="Mortal Kombat X"
           />
@@ -53,6 +53,7 @@ document.getElementById("novedades").innerHTML = `
       </div>
     </section>
 `;
+
 
 
 
