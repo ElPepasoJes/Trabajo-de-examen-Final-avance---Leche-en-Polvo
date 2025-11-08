@@ -6,7 +6,7 @@ function GameCard({ game }) {
       <img
         src={game.image}
         alt={game.name}
-        className="rounded-md w-full mb-4"
+        className="w-[208px] h-[260px] object-cover rounded-md"
       />
       <p className="font-bold mb-3">S/ {game.price}</p>
       <button className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-full w-full">
@@ -51,5 +51,6 @@ function App() {
 }
 
 ReactDOM.render(<App />, document.getElementById("moviesgrid"));
+
 
 
